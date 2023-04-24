@@ -255,9 +255,31 @@ public class MemberDAO {
 	                    member.setBook(bookList);
 	                }
 	            } catch (Exception e) {
-	            	System.out.println(id+"\t"
+	            	/*System.out.println(id+"\t"
 	    							+name+"\t"
 	    							+bookList);
+	            	*/
+	            	
+	            	StringBuilder sb = new StringBuilder();
+	            	sb.append("update meminfo");
+	            	sb.append(" set book = ?");
+	            	sb.append("where member_id = ?");
+	            	
+	            	try(Connection conn3 = new ConnectionFactory().getConnection();
+	            		PreparedStatement pstmt3 = conn3.prepareStatement(sb.toString());
+	            	){
+	            		pstmt3.setString(1, bookList);
+	            		pstmt3.setString(2, id);
+	            		
+	            		pstmt3.executeUpdate();
+	            		
+	            		System.out.println(id+"\t"
+    							+name+"\t"
+    							+bookList);
+	            		
+	            	}catch(Exception e2) {
+	            		e2.printStackTrace();
+	            	}
 	            }
 	        }
 	    } catch (Exception e) {
